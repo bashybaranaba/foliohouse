@@ -1,0 +1,60 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import DatasetList from "@/src/components/dataset/DatasetList";
+import HomeBanner from "@/src/components/layout/HomeBanner";
+import SideNav from "@/src/components/layout/SideNav";
+
+import DatasetOutlinedIcon from "@mui/icons-material/DatasetOutlined";
+
+export default function Home() {
+  return (
+    <Grid container spacing={1}>
+      <Box
+        sx={{
+          mt: 10,
+          height: 130,
+          borderRadius: 50,
+          backgroundColor: "#fff",
+          boxShadow:
+            "0 0 90px 80px #fff, 0 0 100px 60px #f0f,  0 0 140px 80px #0ff",
+        }}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          right: 0,
+          top: 0,
+          height: 2,
+          borderRadius: 50,
+          backgroundColor: "#fff",
+          boxShadow:
+            "0 0 50px 10px #fff, 0 0 60px 10px #fff59d,  0 0 70px 40px #0ff",
+        }}
+      />
+
+      <Grid item lg={3}>
+        <HomeBanner />
+        <Box sx={{ m: 2, border: 1, borderRadius: 4, borderColor: "#556cd6" }}>
+          <SideNav />
+        </Box>
+      </Grid>
+      <Grid item lg={8}>
+        <Box sx={{ m: 3, mb: 2 }}>
+          <Box sx={{ display: "flex" }}>
+            <DatasetOutlinedIcon sx={{ fontSize: 30, mr: 1 }} />
+            <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
+              Datasets
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box sx={{ m: 2 }}>
+          <DatasetList />
+          <DatasetList />
+        </Box>
+      </Grid>
+    </Grid>
+  );
+}
