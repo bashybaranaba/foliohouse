@@ -11,8 +11,24 @@ import { CardActionArea } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
-export default function DatasetCard() {
+interface Props {
+  data: {
+    id: number;
+    size: number;
+    name: string;
+    fileUrl: string;
+    headline: string;
+    description: string;
+    accessCount: number;
+    tokensEarned: number;
+    isPrivate: boolean;
+  };
+}
+
+export default function DatasetCard(props: Props) {
   const router = useRouter();
+
+  const { data } = props;
   const image = null;
   const handleClick = () => {
     router.push("/datasets/1");

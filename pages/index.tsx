@@ -1,14 +1,61 @@
-import * as React from "react";
+import { ethers } from "ethers";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import LinearProgress from "@mui/material/LinearProgress";
+
+import DatasetOutlinedIcon from "@mui/icons-material/DatasetOutlined";
+
 import DatasetList from "@/src/components/dataset/DatasetList";
 import HomeBanner from "@/src/components/layout/HomeBanner";
 import SideNav from "@/src/components/layout/SideNav";
 
-import DatasetOutlinedIcon from "@mui/icons-material/DatasetOutlined";
+import { FoliohouseAddress } from "../config.js";
+import Foliohouse from "../artifacts/contracts/Foliohouse.sol/Foliohouse.json";
 
 export default function Home() {
+  const [datasets, setDatasets] = useState<any>([]);
+  const [loadingState, setLoadingState] = useState("nor-loaded");
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    loadDatasets();
+  }, []);
+
+  async function loadDatasets() {
+    setLoading(true);
+    /* create a generic provider and query new items */
+    const provider = new ethers.providers.JsonRpcProvider();
+    const contract = new ethers.Contract(
+      FoliohouseAddress,
+      Foliohouse.abi,
+      provider
+    );
+    const data = await contract.getPublicDatasets();
+
+    /*  map over items returned from smart contract and format then */
+    const datasets: any[] = await Promise.all(
+      data.map(async (i: any) => {
+        let dataset = {
+          id: i.id.toNumber(),
+          size: i.size,
+          name: i.name,
+          fileUrl: i.fileUrl,
+          headline: i.headline,
+          description: i.description,
+          accessCount: i.accessCount.toNumber(),
+          tokensEarned: i.tokensEarned.toNumber(),
+          isPrivate: i.isPrivate,
+        };
+        return dataset;
+      })
+    );
+    setDatasets(datasets);
+    datasets.sort((a, b) => b.id - a.id);
+    setLoading(false);
+    setLoadingState("loaded");
+  }
+
   return (
     <Grid container spacing={1}>
       <Box
@@ -51,8 +98,13 @@ export default function Home() {
         </Box>
 
         <Box sx={{ m: 2 }}>
-          <DatasetList />
-          <DatasetList />
+          {loading ? <LinearProgress sx={{ ml: 2, mr: 2 }} /> : null}
+          <DatasetList datasets={datasets} />
+          {loadingState === "loaded" && !datasets.length ? (
+            <Box sx={{ m: 3 }}>
+              <Typography variant="h6">No datasets yet</Typography>
+            </Box>
+          ) : null}
         </Box>
       </Grid>
     </Grid>

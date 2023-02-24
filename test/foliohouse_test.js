@@ -14,7 +14,6 @@ describe("Foliohouse", function () {
     await foliohouseContract
       .connect(firstMemberAddress)
       .createDataset(
-        0,
         20,
         "DatasetName",
         "https://fileurl",
@@ -26,7 +25,6 @@ describe("Foliohouse", function () {
     await foliohouseContract
       .connect(secondMemberAddress)
       .createDataset(
-        1,
         1024 * 1024 * 1024,
         "DatasetName1",
         "https://fileurl",
@@ -38,7 +36,6 @@ describe("Foliohouse", function () {
     await foliohouseContract
       .connect(thirdMemberAddress)
       .createDataset(
-        2,
         20,
         "DatasetName3",
         "https://fileurl",
@@ -52,7 +49,6 @@ describe("Foliohouse", function () {
     await foliohouseContract
       .connect(secondMemberAddress)
       .createDataset(
-        3,
         1,
         "DatasetName1",
         "https://fileurl",

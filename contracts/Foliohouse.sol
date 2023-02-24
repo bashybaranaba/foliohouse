@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Foliohouse is ERC20 {
-    
+contract Foliohouse  {
+    using Counters for Counters.Counter;
+    Counters.Counter private datasetIds;
+
     uint256 public constant GB = 1024 * 1024 * 1024; // 1GB in bytes
     uint256 public constant FREE_STORAGE_LIMIT = GB; // 1GB
     uint256 public constant STORAGE_PRICE_PER_BYTE = 1 wei; // price per byte for storage
@@ -33,10 +35,10 @@ contract Foliohouse is ERC20 {
     event DatasetAllowed(uint256 indexed id, address indexed user);
     event DatasetRemoved(uint256 indexed id, address indexed remover);
     
-    constructor() ERC20("Dataset Token", "DT") {}
-    
     // create a new dataset
-    function createDataset(uint256 id, uint256 size, string memory name, string memory fileUrl,string memory headline, string memory description, bool isPrivate) external {
+    function createDataset( uint256 size, string memory name, string memory fileUrl,string memory headline, string memory description, bool isPrivate) external {
+        uint256 id = datasetIds.current();
+        datasetIds.increment();
         usedStorage[msg.sender]+=size;
         if(usedStorage[msg.sender] > FREE_STORAGE_LIMIT){
             uint storageCost = size * STORAGE_PRICE_PER_BYTE; 
