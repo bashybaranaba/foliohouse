@@ -20,8 +20,7 @@ contract Foliohouse  {
         uint256 size;
         string name;
         string fileUrl;
-        string headline;
-        string description;
+        string metaData;
         uint256 accessCount;
         uint256 tokensEarned;
         bool isPrivate;  
@@ -36,7 +35,7 @@ contract Foliohouse  {
     event DatasetRemoved(uint256 indexed id, address indexed remover);
     
     // create a new dataset
-    function createDataset( uint256 size, string memory name, string memory fileUrl,string memory headline, string memory description, bool isPrivate) external {
+    function createDataset( uint256 size, string memory name, string memory fileUrl, string memory metaData, bool isPrivate) external {
         uint256 id = datasetIds.current();
         datasetIds.increment();
         usedStorage[msg.sender]+=size;
@@ -44,10 +43,10 @@ contract Foliohouse  {
             uint storageCost = size * STORAGE_PRICE_PER_BYTE; 
             require(balances[msg.sender] >= storageCost, "Free storage limit exceeded");
             balances[msg.sender] -= storageCost; // User is charged for storage exceeding free storage limit
-            datasets.push(Dataset(id, msg.sender, size, name, fileUrl, headline, description, 0, 0, isPrivate));
+            datasets.push(Dataset(id, msg.sender, size, name, fileUrl, metaData, 0, 0, isPrivate));
             emit DatasetCreated(id, msg.sender, size);
         }
-        datasets.push(Dataset(id, msg.sender, size, name, fileUrl, headline, description, 0, 0, isPrivate));
+        datasets.push(Dataset(id, msg.sender, size, name, fileUrl, metaData, 0, 0, isPrivate));
         emit DatasetCreated(id, msg.sender, size);
     }
     

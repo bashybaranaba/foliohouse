@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
@@ -36,13 +37,15 @@ export default function Home() {
     /*  map over items returned from smart contract and format then */
     const datasets: any[] = await Promise.all(
       data.map(async (i: any) => {
+        const meta = await axios.get(i.metadata);
         let dataset = {
           id: i.id.toNumber(),
           size: i.size,
           name: i.name,
           fileUrl: i.fileUrl,
-          headline: i.headline,
-          description: i.description,
+          headline: meta.data.headline,
+          description: meta.data.description,
+          image: meta.data.imageUrl,
           accessCount: i.accessCount.toNumber(),
           tokensEarned: i.tokensEarned.toNumber(),
           isPrivate: i.isPrivate,

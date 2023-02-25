@@ -17,8 +17,7 @@ describe("Foliohouse", function () {
         20,
         "DatasetName",
         "https://fileurl",
-        "Dataset Hedline",
-        "Dataset Description",
+        "https://metadata",
         false
       );
 
@@ -28,8 +27,7 @@ describe("Foliohouse", function () {
         1024 * 1024 * 1024,
         "DatasetName1",
         "https://fileurl",
-        "Dataset Hedline1",
-        "Dataset Description1",
+        "https://metadata",
         false
       );
 
@@ -39,8 +37,7 @@ describe("Foliohouse", function () {
         20,
         "DatasetName3",
         "https://fileurl",
-        "Dataset Hedline2",
-        "Dataset Description2",
+        "https://metadata",
         false
       );
 
@@ -52,8 +49,7 @@ describe("Foliohouse", function () {
         1,
         "DatasetName1",
         "https://fileurl",
-        "Dataset Hedline1",
-        "Dataset Description1",
+        "https://metadata",
         false
       );
 

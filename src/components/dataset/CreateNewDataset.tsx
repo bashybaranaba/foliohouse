@@ -36,7 +36,7 @@ export default function CreateNewDataset() {
   const [finish, setFinish] = React.useState(false);
 
   const [name, setName] = React.useState("");
-  const [fileUrl, setFileUrl] = React.useState("");
+  const [file, setFile] = React.useState(null);
   const [isPublic, setIsPublic] = React.useState(true);
   const [allowedUsers, setallowedUsers] = React.useState([]);
   const [description, setDescription] = React.useState("");
@@ -120,7 +120,14 @@ export default function CreateNewDataset() {
                 ))}
               </Stepper>
             </Box>
-            {activeStep === 0 ? <DatasetForm /> : null}
+            {activeStep === 0 ? (
+              <DatasetForm
+                name={name}
+                setName={setName}
+                file={file}
+                setFile={setFile}
+              />
+            ) : null}
             {activeStep === 1 ? <ManageAccess /> : null}
             {activeStep === 2 ? <DetailsForm /> : null}
             <Grid container spacing={2}>
