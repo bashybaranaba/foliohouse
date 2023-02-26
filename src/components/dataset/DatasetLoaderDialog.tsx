@@ -10,9 +10,14 @@ import Typography from "@mui/material/Typography";
 
 import CodeSnippet from "./CodeSnippet";
 
-export default function DatasetLoaderDialog() {
+interface Props {
+  fileUrl: string;
+}
+
+export default function DatasetLoaderDialog(props: Props) {
   const [open, setOpen] = React.useState(false);
 
+  const { fileUrl } = props;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -23,7 +28,7 @@ export default function DatasetLoaderDialog() {
 
   const code = `from foliohouse import load_dataset
 
-dataset = load_dataset("BashyBaranaba/testdtatset")`;
+dataset = load_dataset("${fileUrl}")`;
 
   return (
     <div>

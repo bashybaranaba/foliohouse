@@ -26,7 +26,7 @@ describe("Foliohouse", function () {
       .createDataset(
         1024 * 1024 * 1024,
         "DatasetName1",
-        "https://fileurl",
+        "https://fileurl1",
         "https://metadata",
         false
       );
@@ -36,19 +36,23 @@ describe("Foliohouse", function () {
       .createDataset(
         20,
         "DatasetName3",
-        "https://fileurl",
+        "https://fileurl2",
         "https://metadata",
         false
       );
 
-    await foliohouseContract.accessDataset(1);
+    await foliohouseContract.accessDataset("https://fileurl1");
+    await foliohouseContract.accessDataset("https://fileurl1");
+    await foliohouseContract.accessDataset("https://fileurl1");
+    await foliohouseContract.accessDataset("https://fileurl1");
+    await foliohouseContract.accessDataset("https://fileurl1");
 
     await foliohouseContract
       .connect(secondMemberAddress)
       .createDataset(
         1,
         "DatasetName1",
-        "https://fileurl",
+        "https://fileurl3",
         "https://metadata",
         false
       );
@@ -56,7 +60,7 @@ describe("Foliohouse", function () {
     let allDatasets = await foliohouseContract.getAllDatasets();
     let publicDatasets = await foliohouseContract.getPublicDatasets();
     let ownedDatasets = await foliohouseContract
-      .connect(thirdMemberAddress)
+      .connect(secondMemberAddress)
       .getOwnedDatasets();
 
     let creatorDatasets = await foliohouseContract.getPublicDatasetsByCreator(

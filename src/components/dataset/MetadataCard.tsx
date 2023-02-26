@@ -11,18 +11,33 @@ import PeopleIcon from "@mui/icons-material/People";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import DatasetLoaderDialog from "./DatasetLoaderDialog";
 
-export default function MetaDataCard() {
-  const image = null;
+interface Props {
+  data: {
+    id: number;
+    size: number;
+    name: string;
+    fileUrl: string;
+    headline: string;
+    description: string;
+    image: string;
+    accessCount: number;
+    tokensEarned: number;
+    isPrivate: boolean;
+  };
+}
+
+export default function MetaDataCard(props: Props) {
+  const { data } = props;
   return (
     <Card
       elevation={0}
       sx={{ m: 2, border: 1, borderRadius: 6, borderColor: "#cfd8dc" }}
     >
-      {image ? (
+      {data.image ? (
         <CardMedia
           component="img"
           height="100"
-          image={image}
+          image={data.image}
           alt="green iguana"
         />
       ) : (
@@ -37,11 +52,13 @@ export default function MetaDataCard() {
           </Box>
           <Box sx={{ mr: 3, display: "flex" }}>
             <BubbleChartIcon sx={{ color: "#5e35b1" }} />
-            <Typography variant="body2">Accesses: 100</Typography>
+            <Typography variant="body2">
+              Accesses: {data.accessCount}
+            </Typography>
           </Box>
         </Box>
         <Box sx={{ m: 1, mt: 2, mb: 0 }}>
-          <DatasetLoaderDialog />
+          <DatasetLoaderDialog fileUrl={data.fileUrl} />
         </Box>
       </CardContent>
     </Card>

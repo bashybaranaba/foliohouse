@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import { create as ipfsHttpClient } from "ipfs-http-client";
+import { create } from "ipfs-core";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -26,15 +26,6 @@ import { encryptFile } from "@/src/util/encryptFile";
 
 import { FoliohouseAddress } from "../../../config.js";
 import Foliohouse from "../../../artifacts/contracts/Foliohouse.sol/Foliohouse.json";
-
-const client = ipfsHttpClient({
-  host: "ipfs.infura.io",
-  port: 5001,
-  protocol: "https",
-  headers: {
-    authorization: `Bearer ${process.env.PROJECT_ID}`,
-  },
-});
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -87,32 +78,36 @@ export default function CreateNewDataset() {
     setFinish(false);
   };
 
-  async function processDatasetFile() {
+  async function processDatasetFiles() {
+    const ipfs = await create();
+    let files = {
+      datasetFile: "",
+      metadataUrl: "",
+    };
+
     const encryptedDataset = await encryptFile(
       file,
-      process.env.DATASET_SECRET
+      process.env.ENCRYPTION_KEY
     );
     try {
-      const added = await client.add(encryptedDataset);
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-      return url;
+      const resFile = await ipfs.add(encryptedDataset);
+      const resImage = await ipfs.add(image);
+      const datasetFileUrl = `https://ipfs.io/ipfs/${resFile.cid.toString()}`;
+      const iamgeUrl = `https://ipfs.io/ipfs/${resImage.cid.toString()}`;
+      const data = JSON.stringify({
+        headline: headline,
+        description: description,
+        imageUrl: iamgeUrl,
+      });
+      const resData = await ipfs.add(data);
+      const metadataUrl = `https://ipfs.io/ipfs/${resData.cid.toString()}`;
+      files = {
+        datasetFile: datasetFileUrl,
+        metadataUrl: metadataUrl,
+      };
+      return files;
     } catch (error) {
       console.log("Error uploading file: ", error);
-    }
-  }
-
-  async function uploadMetadataToIPFS() {
-    const data = JSON.stringify({
-      headline: headline,
-      description: description,
-      imageUrl: image,
-    });
-    try {
-      const added = await client.add(data);
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-      return url;
-    } catch (error) {
-      console.log("Error uploading image: ", error);
     }
   }
 
@@ -122,19 +117,19 @@ export default function CreateNewDataset() {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
 
-    const datasetFileUrl = await processDatasetFile();
-    const metadataUrl = await uploadMetadataToIPFS();
+    const processedDatasetFiles = await processDatasetFiles();
+    const { datasetFile, metadataUrl } = processedDatasetFiles;
 
     let contract = new ethers.Contract(
       FoliohouseAddress,
       Foliohouse.abi,
       signer
     );
-    console.log(file.size, name, datasetFileUrl, metadataUrl, isPrivate);
+    console.log(file.size, name, datasetFile, metadataUrl, isPrivate);
     let creationAction = await contract.createDataset(
       file.size,
       name,
-      datasetFileUrl,
+      datasetFile,
       metadataUrl,
       isPrivate
     );

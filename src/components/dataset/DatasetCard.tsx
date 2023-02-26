@@ -19,6 +19,7 @@ interface Props {
     fileUrl: string;
     headline: string;
     description: string;
+    image: string;
     accessCount: number;
     tokensEarned: number;
     isPrivate: boolean;
@@ -29,19 +30,19 @@ export default function DatasetCard(props: Props) {
   const router = useRouter();
 
   const { data } = props;
-  const image = null;
+  console.log(data);
   const handleClick = () => {
-    router.push("/datasets/1");
+    router.push(`/datasets/${data.id}`);
   };
   return (
     <Grid item xs={12} lg={4}>
       <Card elevation={0} sx={{ m: 1, border: 1, borderRadius: 6 }}>
         <CardActionArea onClick={handleClick}>
-          {image ? (
+          {data.image ? (
             <CardMedia
               component="img"
               height="100"
-              image={image}
+              image={data.image}
               alt="green iguana"
             />
           ) : (

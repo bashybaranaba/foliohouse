@@ -17,7 +17,7 @@ import Foliohouse from "../artifacts/contracts/Foliohouse.sol/Foliohouse.json";
 
 export default function Home() {
   const [datasets, setDatasets] = useState<any>([]);
-  const [loadingState, setLoadingState] = useState("nor-loaded");
+  const [loadingState, setLoadingState] = useState("not-loaded");
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     loadDatasets();
@@ -37,7 +37,7 @@ export default function Home() {
     /*  map over items returned from smart contract and format then */
     const datasets: any[] = await Promise.all(
       data.map(async (i: any) => {
-        const meta = await axios.get(i.metadata);
+        const meta = await axios.get(i.metaData);
         let dataset = {
           id: i.id.toNumber(),
           size: i.size,

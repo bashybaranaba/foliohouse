@@ -58,20 +58,25 @@ contract Foliohouse  {
     }
     
     //access a dataset and earn tokens for the creator
-    function accessDataset(uint256 id) external {
-        Dataset storage dataset = datasets[id];
-        require(dataset.creator != address(0), "Dataset does not exist");
-        uint256 tokensEarned = 1;
-        if (dataset.isPrivate){
-            dataset.accessCount +=1;
-            dataset.tokensEarned += tokensEarned;
-            balances[dataset.creator] += tokensEarned; // reward dataset creator
-            emit DatasetAccessed(id, msg.sender, tokensEarned);
+    function accessDataset(string memory fileUrl) external {
+        for (uint256 i = 0; i < datasets.length; i++) {
+            if (keccak256(bytes(datasets[i].fileUrl)) == keccak256(bytes(fileUrl))) {
+                Dataset storage dataset = datasets[i];
+                require(dataset.creator != address(0), "Dataset does not exist");
+                uint256 tokensEarned = 1;
+                if (dataset.isPrivate){
+                    dataset.accessCount +=1;
+                    dataset.tokensEarned += tokensEarned;
+                    balances[dataset.creator] += tokensEarned; // reward dataset creator
+                    emit DatasetAccessed(i, msg.sender, tokensEarned);
+                }
+                dataset.accessCount +=1;
+                dataset.tokensEarned += tokensEarned;
+                balances[dataset.creator] += tokensEarned; // reward dataset creator
+                emit DatasetAccessed(i, msg.sender, tokensEarned);
+            }
         }
-        dataset.accessCount +=1;
-        dataset.tokensEarned += tokensEarned;
-        balances[dataset.creator] += tokensEarned; // reward dataset creator
-        emit DatasetAccessed(id, msg.sender, tokensEarned);
+                
     }
 
     function getAllDatasets() public view returns (Dataset[] memory) {
@@ -136,6 +141,7 @@ contract Foliohouse  {
     }
 
     function getDatasetById(uint id) public view returns (Dataset memory) {
+         require(id < datasets.length, "Invalid dataset ID");
         return datasets[id];
     }
 

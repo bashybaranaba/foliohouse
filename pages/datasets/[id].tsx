@@ -1,6 +1,10 @@
-import * as React from "react";
+import axios from "axios";
+import { ethers } from "ethers";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 
 import DatasetPreviewTable from "@/src/components/dataset/DatasetPreviewTable";
@@ -8,7 +12,53 @@ import HomeBanner from "@/src/components/layout/HomeBanner";
 import SideNav from "@/src/components/layout/SideNav";
 import MetadataCard from "@/src/components/dataset/MetadataCard";
 
+import { FoliohouseAddress } from "../../config.js";
+import Foliohouse from "../../artifacts/contracts/Foliohouse.sol/Foliohouse.json";
+
 export default function DatasetDetails() {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const [dataset, setDataset] = useState(null);
+  const [loadingState, setLoadingState] = useState("nor-loaded");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    loadDataset();
+  }, []);
+
+  async function loadDataset() {
+    setLoading(true);
+    /* create a generic provider and query new items */
+    const provider = new ethers.providers.JsonRpcProvider();
+    const contract = new ethers.Contract(
+      FoliohouseAddress,
+      Foliohouse.abi,
+      provider
+    );
+    const data = await contract.getDatasetById(id);
+    console.log(data);
+
+    const meta = await axios.get(data.metaData);
+    let datasetDetails = {
+      id: data.id.toNumber(),
+      size: data.size,
+      name: data.name,
+      fileUrl: data.fileUrl,
+      headline: meta.data.headline,
+      description: meta.data.description,
+      image: meta.data.imageUrl,
+      accessCount: data.accessCount.toNumber(),
+      tokensEarned: data.tokensEarned.toNumber(),
+      isPrivate: data.isPrivate,
+    };
+
+    setDataset(datasetDetails);
+
+    setLoading(false);
+    setLoadingState("loaded");
+  }
+
   return (
     <Grid container spacing={1}>
       <Box
@@ -27,29 +77,35 @@ export default function DatasetDetails() {
           <SideNav />
         </Box>
       </Grid>
-      <Grid item lg={6} sx={{ mt: 3 }}>
-        <Box sx={{ m: 2 }}>
-          <Typography variant="h4" sx={{ fontWeight: 600 }}>
-            Dataset Title
-          </Typography>
-          <Typography sx={{ mt: 2, mb: 3 }}>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
+      {dataset && (
+        <>
+          <Grid item lg={6} sx={{ mt: 3 }}>
+            <Box sx={{ m: 2 }}>
+              <Typography variant="h4" sx={{ fontWeight: 600 }}>
+                {dataset.name}
+              </Typography>
+              <Typography sx={{ mt: 2, mb: 3 }}>{dataset.headline}</Typography>
 
-          <DatasetPreviewTable />
-          <Typography variant="h6" sx={{ fontWeight: 600, mt: 4 }}>
-            About Dataset
-          </Typography>
-          <Typography sx={{ mt: 2, mb: 3 }}>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
+              <DatasetPreviewTable datasetFile={dataset.fileUrl} />
+              <Typography variant="h6" sx={{ fontWeight: 600, mt: 4 }}>
+                About Dataset
+              </Typography>
+              <Typography sx={{ mt: 2, mb: 3 }}>
+                {dataset.description}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item lg={3} sx={{ mt: 3 }}>
+            <MetadataCard data={dataset} />
+          </Grid>
+        </>
+      )}
+      {loading ? <LinearProgress sx={{ ml: 2, mr: 2 }} /> : null}
+      {loadingState === "loaded" && !dataset ? (
+        <Box sx={{ m: 3 }}>
+          <Typography variant="h6">No data</Typography>
         </Box>
-      </Grid>
-      <Grid item lg={3} sx={{ mt: 3 }}>
-        <MetadataCard />
-      </Grid>
+      ) : null}
     </Grid>
   );
 }
