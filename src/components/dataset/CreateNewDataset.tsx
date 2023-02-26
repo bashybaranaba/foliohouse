@@ -1,9 +1,13 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
+import { ethers } from "ethers";
+import Web3Modal from "web3modal";
+import { create as ipfsHttpClient } from "ipfs-http-client";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Dialog from "@mui/material/Dialog";
-
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -18,7 +22,19 @@ import DatasetForm from "./DatasetForm";
 import DetailsForm from "./DetailsForm";
 import ManageAccess from "./ManageAccess";
 
-const steps = ["Upload dataset", "Manage access", "Add details"];
+import { encryptFile } from "@/src/util/encryptFile";
+
+import { FoliohouseAddress } from "../../../config.js";
+import Foliohouse from "../../../artifacts/contracts/Foliohouse.sol/Foliohouse.json";
+
+const client = ipfsHttpClient({
+  host: "ipfs.infura.io",
+  port: 5001,
+  protocol: "https",
+  headers: {
+    authorization: `Bearer ${process.env.PROJECT_ID}`,
+  },
+});
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -29,18 +45,28 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const steps = ["Upload dataset", "Manage access", "Add details"];
+
 export default function CreateNewDataset() {
+  const router = useRouter();
+
   const [open, setOpen] = React.useState(false);
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [next, setnNext] = React.useState(false);
+  const [activeStep, setActiveStep] = React.useState(1);
+  const [next, setNext] = React.useState(false);
   const [finish, setFinish] = React.useState(false);
 
   const [name, setName] = React.useState("");
   const [file, setFile] = React.useState(null);
-  const [isPublic, setIsPublic] = React.useState(true);
-  const [allowedUsers, setallowedUsers] = React.useState([]);
+  const [isPrivate, setIsPrivate] = React.useState(false);
+  const [headline, setHeadline] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [imageUrl, setImageUrl] = React.useState("");
+  const [image, setImage] = React.useState(null);
+
+  useEffect(() => {
+    if (activeStep === steps.length) {
+      setFinish(true);
+    }
+  }, [activeStep]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,6 +86,63 @@ export default function CreateNewDataset() {
     setActiveStep(nextStep);
     setFinish(false);
   };
+
+  async function processDatasetFile() {
+    const encryptedDataset = await encryptFile(
+      file,
+      process.env.DATASET_SECRET
+    );
+    try {
+      const added = await client.add(encryptedDataset);
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      return url;
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+    }
+  }
+
+  async function uploadMetadataToIPFS() {
+    const data = JSON.stringify({
+      headline: headline,
+      description: description,
+      imageUrl: image,
+    });
+    try {
+      const added = await client.add(data);
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      return url;
+    } catch (error) {
+      console.log("Error uploading image: ", error);
+    }
+  }
+
+  async function CreateDataset() {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    const datasetFileUrl = await processDatasetFile();
+    const metadataUrl = await uploadMetadataToIPFS();
+
+    let contract = new ethers.Contract(
+      FoliohouseAddress,
+      Foliohouse.abi,
+      signer
+    );
+    console.log(file.size, name, datasetFileUrl, metadataUrl, isPrivate);
+    let creationAction = await contract.createDataset(
+      file.size,
+      name,
+      datasetFileUrl,
+      metadataUrl,
+      isPrivate
+    );
+
+    await creationAction.wait();
+    router.reload();
+    handleClose();
+  }
 
   return (
     <div>
@@ -120,7 +203,7 @@ export default function CreateNewDataset() {
                 ))}
               </Stepper>
             </Box>
-            {activeStep === 0 ? (
+            {activeStep === 1 ? (
               <DatasetForm
                 name={name}
                 setName={setName}
@@ -128,11 +211,22 @@ export default function CreateNewDataset() {
                 setFile={setFile}
               />
             ) : null}
-            {activeStep === 1 ? <ManageAccess /> : null}
-            {activeStep === 2 ? <DetailsForm /> : null}
+            {activeStep === 2 ? (
+              <ManageAccess isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
+            ) : null}
+            {activeStep === 3 ? (
+              <DetailsForm
+                headline={headline}
+                setHeadline={setHeadline}
+                description={description}
+                setDescription={setDescription}
+                image={image}
+                setImage={setImage}
+              />
+            ) : null}
             <Grid container spacing={2}>
-              <Grid item xs={activeStep === 0 ? 0 : 6}>
-                {activeStep !== 0 ? (
+              <Grid item xs={activeStep === 1 ? 0 : 6}>
+                {activeStep !== 1 ? (
                   <Button
                     fullWidth
                     variant="outlined"
@@ -144,15 +238,15 @@ export default function CreateNewDataset() {
                   </Button>
                 ) : null}
               </Grid>
-              <Grid item xs={activeStep === 0 ? 12 : 6}>
+              <Grid item xs={activeStep === 1 ? 12 : 6}>
                 <Button
                   fullWidth
                   variant="contained"
                   component="label"
                   sx={{ textTransform: "none", mt: 2 }}
-                  onClick={handleNext}
+                  onClick={finish ? CreateDataset : handleNext}
                 >
-                  Next
+                  {finish ? "Finish" : "Next"}
                 </Button>
               </Grid>
             </Grid>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
@@ -7,20 +7,29 @@ import Typography from "@mui/material/Typography";
 import CollectionsBookmarkOutlinedIcon from "@mui/icons-material/CollectionsBookmarkOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-export default function ManageAccess() {
-  const [selectedValue, setSelectedValue] = React.useState("public");
+interface Props {
+  isPrivate: boolean;
+  setIsPrivate: Dispatch<SetStateAction<boolean>>;
+}
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
+export default function ManageAccess(props: Props) {
+  const { isPrivate, setIsPrivate } = props;
+
+  const handleSelectPublic = () => {
+    setIsPrivate(false);
+  };
+
+  const handleSelectPrivate = () => {
+    setIsPrivate(true);
   };
 
   return (
     <Grid sx={{ width: "100%" }}>
       <Box sx={{ display: "flex", m: 3 }}>
         <Radio
-          checked={selectedValue === "public"}
-          onChange={handleChange}
-          value="public"
+          checked={isPrivate === false}
+          onChange={handleSelectPublic}
+          value={!isPrivate}
           name="radio-buttons"
           inputProps={{ "aria-label": "Public" }}
         />
@@ -37,9 +46,9 @@ export default function ManageAccess() {
 
       <Box sx={{ display: "flex", m: 3 }}>
         <Radio
-          checked={selectedValue === "private"}
-          onChange={handleChange}
-          value="private"
+          checked={isPrivate === true}
+          onChange={handleSelectPrivate}
+          value={isPrivate}
           name="radio-buttons"
           inputProps={{ "aria-label": "Private" }}
         />

@@ -50,11 +50,10 @@ export default function DatasetCard(props: Props) {
 
           <CardContent sx={{ m: 1 }}>
             <Typography gutterBottom variant="h6" component="div">
-              Lizard
+              {data.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species,
+              {data.headline}
             </Typography>
 
             <Box sx={{ m: 1, mt: 2, display: "flex", opacity: 0.8 }}>
@@ -64,7 +63,7 @@ export default function DatasetCard(props: Props) {
               </Box>
               <Box sx={{ mr: 3, display: "flex" }}>
                 <BubbleChartIcon sx={{ color: "#5e35b1" }} />
-                <Typography variant="body2">100</Typography>
+                <Typography variant="body2">{data.accessCount}</Typography>
               </Box>
             </Box>
           </CardContent>
