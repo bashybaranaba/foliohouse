@@ -11,7 +11,7 @@ export default function DatasetList(props: Props) {
   return (
     <Grid container spacing={1}>
       {datasets.map((dataset, i) => (
-        <DatasetCard data={dataset} />
+        <DatasetCard data={dataset} key={i} />
       ))}
     </Grid>
   );
