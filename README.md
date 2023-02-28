@@ -8,11 +8,11 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 
 This project leverages the Filecoion VM and IPFS to create a decentralized dataset repository that provides access control and a built-in token economy to incentivize contributions and cover the cost of storage.
 
-#### URLs
-##### Protottype
+### URLs
+#### Live Protottype
 https://taarifu.vercel.app/
 
-#### Slides
+### Slides
 https://www.canva.com/design/DAFYPbP4Xlo/nStFvGUYWfISnyMW7MYQow/view?utm_content=DAFYPbP4Xlo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 
