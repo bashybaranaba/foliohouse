@@ -13,7 +13,7 @@ import SideNav from "@/src/components/layout/SideNav";
 import MetadataCard from "@/src/components/dataset/MetadataCard";
 
 import { FoliohouseAddress } from "../../config.js";
-import Foliohouse from "../../artifacts/contracts/Foliohouse.sol/Foliohouse.json";
+import Foliohouse from "../../Foliohouse.json";
 
 export default function DatasetDetails() {
   const router = useRouter();

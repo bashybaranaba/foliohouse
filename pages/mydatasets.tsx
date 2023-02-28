@@ -1,12 +1,12 @@
 import axios from "axios";
 import { ethers } from "ethers";
+import Web3Modal from "web3modal";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import LinearProgress from "@mui/material/LinearProgress";
-
-import DatasetOutlinedIcon from "@mui/icons-material/DatasetOutlined";
+import DatasetLinkedOutlinedIcon from "@mui/icons-material/DatasetLinkedOutlined";
 
 import DatasetList from "@/src/components/dataset/DatasetList";
 import HomeBanner from "@/src/components/layout/HomeBanner";
@@ -15,7 +15,7 @@ import SideNav from "@/src/components/layout/SideNav";
 import { FoliohouseAddress } from "../config.js";
 import Foliohouse from "../Foliohouse.json";
 
-export default function Home() {
+export default function Mydatasets() {
   const [datasets, setDatasets] = useState<any>([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
   const [loading, setLoading] = useState(false);
@@ -25,16 +25,18 @@ export default function Home() {
 
   async function loadDatasets() {
     setLoading(true);
-    /* create a generic provider and query new items */
-    const provider = new ethers.providers.JsonRpcProvider(
-      "https://api.hyperspace.node.glif.io/rpc/v1"
-    );
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
     const contract = new ethers.Contract(
       FoliohouseAddress,
       Foliohouse.abi,
-      provider
+      signer
     );
-    const data = await contract.getPublicDatasets();
+
+    const data = await contract.getOwnedDatasets();
 
     /*  map over items returned from smart contract and format then */
     const datasets: any[] = await Promise.all(
@@ -95,9 +97,9 @@ export default function Home() {
       <Grid item lg={8}>
         <Box sx={{ m: 3, mb: 2 }}>
           <Box sx={{ display: "flex" }}>
-            <DatasetOutlinedIcon sx={{ fontSize: 30, mr: 1 }} />
+            <DatasetLinkedOutlinedIcon sx={{ fontSize: 30, mr: 1 }} />
             <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
-              Datasets
+              My Datasets
             </Typography>
           </Box>
         </Box>

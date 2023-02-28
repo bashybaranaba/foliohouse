@@ -25,7 +25,7 @@ import ManageAccess from "./ManageAccess";
 import { encryptFile } from "@/src/util/encryptFile";
 
 import { FoliohouseAddress } from "../../../config.js";
-import Foliohouse from "../../../artifacts/contracts/Foliohouse.sol/Foliohouse.json";
+import Foliohouse from "../../../Foliohouse.json";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -87,7 +87,7 @@ export default function CreateNewDataset() {
 
     const encryptedDataset = await encryptFile(
       file,
-      process.env.ENCRYPTION_KEY
+      "0ed60d684aea75f4f4c761c9d9beab51"
     );
     try {
       const resFile = await ipfs.add(encryptedDataset);

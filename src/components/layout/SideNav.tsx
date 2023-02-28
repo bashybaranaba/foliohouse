@@ -6,7 +6,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
-import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import DatasetLinkedIcon from "@mui/icons-material/DatasetLinked";
@@ -28,17 +27,12 @@ export default function SideNav() {
           </ListItemIcon>
           <ListItemText primary="My datasets" />
         </ListItem>
-        <ListItem button component={Link} href="/reports">
-          <ListItemIcon>
-            <LibraryAddCheckIcon />
-          </ListItemIcon>
-          <ListItemText primary="Verified reports" />
-        </ListItem>
-        <ListItem button component={Link} href="/validators">
+
+        <ListItem button component={Link} href="/accountdetails">
           <ListItemIcon>
             <AssignmentIndIcon />
           </ListItemIcon>
-          <ListItemText primary="Validators" />
+          <ListItemText primary="Account Details" />
         </ListItem>
       </List>
       <Box sx={{ p: 1 }}></Box>

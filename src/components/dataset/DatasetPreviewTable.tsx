@@ -38,7 +38,10 @@ export default function DatasetPreviewTable(props: Props) {
   async function loadDatasetPreview() {
     setLoading(true);
     console.log(datasetFile);
-    const data = await decryptPreview(datasetFile, process.env.ENCRYPTION_KEY);
+    const data = await decryptPreview(
+      datasetFile,
+      "0ed60d684aea75f4f4c761c9d9beab51"
+    );
 
     const columnObjects = Object.keys(data[0]).map((columnItem) => {
       let item = { field: columnItem, headerName: columnItem };

@@ -44,6 +44,7 @@ export default function DatasetForm(props: Props) {
           Upload file
           <input
             type="file"
+            accept=".csv"
             hidden
             onChange={(e) => setFile(e.target.files[0])}
           />
