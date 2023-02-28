@@ -19,7 +19,7 @@ export default function DatasetDetails() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [dataset, setDataset] = useState(null);
+  const [dataset, setDataset] = useState({});
   const [loadingState, setLoadingState] = useState("nor-loaded");
   const [loading, setLoading] = useState(false);
 
