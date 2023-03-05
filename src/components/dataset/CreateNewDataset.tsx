@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import { create } from "web3-storage";
-import { Web3Storage, getFilesFromPath } from "web3.storage";
+import { Web3Storage } from "web3.storage";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
