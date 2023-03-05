@@ -1,7 +1,7 @@
 export async function decryptPreview(
   filePath: string,
   secretKey: string
-): Promise<ArrayBuffer> {
+): Promise<any> {
   const response = await fetch(filePath);
   if (!response.ok) {
     throw new Error(
@@ -39,7 +39,7 @@ export async function decryptPreview(
   const decodedData = new TextDecoder("utf-8").decode(decryptedData);
   const rows = decodedData.split("\n").slice(0, 10);
   const headerRow = rows.shift()?.split(",") || [];
-  const data = rows.map((row) => {
+  const data: any[] = rows.map((row) => {
     const rowArray = row.split(",");
     const rowData: Record<string, string> = {};
     for (let i = 0; i < headerRow.length; i++) {

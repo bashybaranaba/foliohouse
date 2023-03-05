@@ -26,9 +26,8 @@ function CustomToolbar() {
 export default function DatasetPreviewTable(props: Props) {
   const { datasetFile } = props;
   const [loading, setLoading] = useState(false);
-  //const [columns, setColumns] = useState([]);
-  const [rows, setRows] = useState([]);
-  const [columns, setColumns] = useState([]);
+  const [rows, setRows] = useState<any>([]);
+  const [columns, setColumns] = useState<any>([]);
 
   useEffect(() => {
     loadDatasetPreview();
@@ -37,9 +36,9 @@ export default function DatasetPreviewTable(props: Props) {
   async function loadDatasetPreview() {
     setLoading(true);
     console.log(datasetFile);
-    const data = await decryptPreview(
+    const data: any[] = await decryptPreview(
       datasetFile,
-      process.env.NEXT_PUBLIC_DATASET_SECRET
+      "0ed60d684aea75f4f4c761c9d9beab51"
     );
 
     const columnObjects =

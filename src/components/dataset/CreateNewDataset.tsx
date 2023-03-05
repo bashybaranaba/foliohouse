@@ -95,7 +95,7 @@ export default function CreateNewDataset() {
 
     const encryptedDataset = await encryptFile(
       file,
-      process.env.NEXT_PUBLIC_DATASET_SECRET
+      "0ed60d684aea75f4f4c761c9d9beab51"
     );
     try {
       const encyptedDatasetFile = new File([encryptedDataset], "dataset");
