@@ -139,9 +139,9 @@ export default function CreateNewDataset() {
       Foliohouse.abi,
       signer
     );
-    console.log(file?.size, name, datasetFile, metadataUrl, isPrivate);
+
     let creationAction = await contract.createDataset(
-      file?.size,
+      124,
       name,
       datasetFile,
       metadataUrl,
