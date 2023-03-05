@@ -50,10 +50,10 @@ export default function DatasetCard(props: Props) {
           )}
 
           <CardContent sx={{ m: 1 }}>
-            <Typography gutterBottom variant="h6" component="div">
+            <Typography gutterBottom variant="h6" component="div" noWrap>
               {data.name}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" noWrap>
               {data.headline}
             </Typography>
 

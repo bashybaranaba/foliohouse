@@ -14,6 +14,7 @@ import MetadataCard from "@/src/components/dataset/MetadataCard";
 
 import { FoliohouseAddress } from "../../config.js";
 import Foliohouse from "../../Foliohouse.json";
+import { decryptPreview } from "@/src/util/decryptPreview";
 
 export default function DatasetDetails() {
   const router = useRouter();
@@ -22,6 +23,8 @@ export default function DatasetDetails() {
   const [dataset, setDataset] = useState<any>({});
   const [loadingState, setLoadingState] = useState("nor-loaded");
   const [loading, setLoading] = useState(false);
+  const [rows, setRows] = useState<any>([]);
+  const [columns, setColumns] = useState<any>([]);
 
   useEffect(() => {
     loadDataset();
@@ -44,7 +47,7 @@ export default function DatasetDetails() {
     const meta = await axios.get(data.metaData);
     let datasetDetails = {
       id: data.id.toNumber(),
-      size: data.size,
+      size: data.size.toNumber(),
       name: data.name,
       fileUrl: data.fileUrl,
       headline: meta.data.headline,
@@ -56,9 +59,40 @@ export default function DatasetDetails() {
     };
 
     setDataset(datasetDetails);
-
+    loadDatasetPreview(datasetDetails.fileUrl);
     setLoading(false);
     setLoadingState("loaded");
+  }
+
+  async function loadDatasetPreview(datasetFile: string) {
+    setLoading(true);
+    console.log(datasetFile);
+    const data: any[] = await decryptPreview(
+      datasetFile,
+      "0ed60d684aea75f4f4c761c9d9beab51"
+    );
+
+    if (!data) {
+      console.log("Dataset file missing");
+      return;
+    }
+    const columnObjects =
+      Object.keys(data[0]) &&
+      Object.keys(data[0]).map((columnItem) => {
+        let item = { field: columnItem, headerName: columnItem };
+        return item;
+      });
+    const rowObjects =
+      data &&
+      data.map((rowItem, index) => {
+        let item = { id: index, ...rowItem };
+        return item;
+      });
+    setColumns(columnObjects);
+    setRows(rowObjects);
+    console.log(rowObjects);
+    console.log(columnObjects);
+    setLoading(false);
   }
 
   return (
@@ -87,8 +121,8 @@ export default function DatasetDetails() {
                 {dataset.name}
               </Typography>
               <Typography sx={{ mt: 2, mb: 3 }}>{dataset.headline}</Typography>
-
-              <DatasetPreviewTable datasetFile={dataset.fileUrl} />
+              {loading ? <LinearProgress /> : null}
+              <DatasetPreviewTable rows={rows} columns={columns} />
               <Typography variant="h6" sx={{ fontWeight: 600, mt: 4 }}>
                 About Dataset
               </Typography>

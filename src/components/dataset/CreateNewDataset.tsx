@@ -6,6 +6,7 @@ import { Web3Storage } from "web3.storage";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import Dialog from "@mui/material/Dialog";
 import Grid from "@mui/material/Grid";
@@ -49,6 +50,7 @@ export default function CreateNewDataset() {
   const [activeStep, setActiveStep] = React.useState(1);
   const [next, setNext] = React.useState(false);
   const [finish, setFinish] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const [name, setName] = React.useState("");
   const [file, setFile] = React.useState(null);
@@ -125,6 +127,7 @@ export default function CreateNewDataset() {
   }
 
   async function CreateDataset() {
+    setLoading(true);
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -149,6 +152,7 @@ export default function CreateNewDataset() {
     );
 
     await creationAction.wait();
+    setLoading(false);
     router.reload();
     handleClose();
   }
@@ -254,8 +258,17 @@ export default function CreateNewDataset() {
                   component="label"
                   sx={{ textTransform: "none", mt: 2 }}
                   onClick={finish ? CreateDataset : handleNext}
+                  disabled={!file || !name}
                 >
-                  {finish ? "Finish" : "Next"}
+                  {finish ? (
+                    loading ? (
+                      <CircularProgress size={25} sx={{ color: "#fff" }} />
+                    ) : (
+                      "Finish"
+                    )
+                  ) : (
+                    "Next"
+                  )}
                 </Button>
               </Grid>
             </Grid>

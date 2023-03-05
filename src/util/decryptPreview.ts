@@ -1,7 +1,7 @@
 export async function decryptPreview(
   filePath: string,
   secretKey: string
-): Promise<any> {
+): Promise<any[]> {
   const response = await fetch(filePath);
   if (!response.ok) {
     throw new Error(

@@ -48,7 +48,7 @@ export default function MetaDataCard(props: Props) {
         <Box sx={{ m: 1, mt: 2, opacity: 0.8 }}>
           <Box sx={{ mr: 3, display: "flex" }}>
             <PeopleIcon sx={{ color: "#1565c0" }} />
-            <Typography variant="body2">Contributors: 3</Typography>
+            <Typography variant="body2">Contributors: 1</Typography>
           </Box>
           <Box sx={{ mr: 3, display: "flex" }}>
             <BubbleChartIcon sx={{ color: "#5e35b1" }} />
