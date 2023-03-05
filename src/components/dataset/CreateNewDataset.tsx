@@ -27,7 +27,6 @@ import { encryptFile } from "@/src/util/encryptFile";
 import { FoliohouseAddress } from "../../../config.js";
 import Foliohouse from "../../../Foliohouse.json";
 
-
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
@@ -94,7 +93,10 @@ export default function CreateNewDataset() {
       return;
     }
 
-    const encryptedDataset = await encryptFile(file, process.env.NEXT_PUBLIC_DATASET_SECRET;);
+    const encryptedDataset = await encryptFile(
+      file,
+      process.env.NEXT_PUBLIC_DATASET_SECRET
+    );
     try {
       const encyptedDatasetFile = new File([encryptedDataset], "dataset");
       const resFile = await storage.put([encyptedDatasetFile]);
