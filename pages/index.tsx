@@ -26,9 +26,7 @@ export default function Home() {
   async function loadDatasets() {
     setLoading(true);
     /* create a generic provider and query new items */
-    const provider = new ethers.providers.JsonRpcProvider(
-      "https://api.hyperspace.node.glif.io/rpc/v1"
-    );
+    const provider = new ethers.providers.JsonRpcProvider();
     const contract = new ethers.Contract(
       FoliohouseAddress,
       Foliohouse.abi,
@@ -40,6 +38,7 @@ export default function Home() {
     const datasets: any[] = await Promise.all(
       data.map(async (i: any) => {
         const meta = await axios.get(i.metaData);
+        console.log("metadata", meta);
         let dataset = {
           id: i.id.toNumber(),
           size: i.size,

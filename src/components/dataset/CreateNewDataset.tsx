@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import { create } from "ipfs-core";
+import { create } from "web3-storage";
+import { Web3Storage, getFilesFromPath } from "web3.storage";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -40,6 +41,10 @@ const steps = ["Upload dataset", "Manage access", "Add details"];
 
 export default function CreateNewDataset() {
   const router = useRouter();
+  const storageToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDg2YWIyOTRhMTQ1RThENkU0ZDFCNmNlRTcwODAxZGNDMTkyOWQ5NzkiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2Nzc5Mzg1Mjg3MTQsIm5hbWUiOiJGb2xpb2hvdXNlIn0.2mttZrpJ6UBXcJwqr28iUb1rV8cqR5Y0MuxhZp-h9n4";
+
+  const storage = new Web3Storage({ token: storageToken });
 
   const [open, setOpen] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(1);
@@ -79,7 +84,6 @@ export default function CreateNewDataset() {
   };
 
   async function processDatasetFiles() {
-    const ipfs = await create();
     let files = {
       datasetFile: "",
       metadataUrl: "",
@@ -87,24 +91,29 @@ export default function CreateNewDataset() {
 
     const encryptedDataset = await encryptFile(
       file,
-      "0ed60d684aea75f4f4c761c9d9beab51"
+      process.env.NEXT_PUBLIC_DATASET_SECRET
     );
     try {
-      const resFile = await ipfs.add(encryptedDataset);
-      const resImage = await ipfs.add(image);
-      const datasetFileUrl = `https://ipfs.io/ipfs/${resFile.cid.toString()}`;
-      const iamgeUrl = `https://ipfs.io/ipfs/${resImage.cid.toString()}`;
+      const encyptedDatasetFile = new File([encryptedDataset], "dataset");
+      const resFile = await storage.put([encyptedDatasetFile]);
+      const imageFile = new File([image], "image");
+      const resImage = await storage.put([imageFile]);
+      const datasetFileUrl = `https://dweb.link/ipfs/${resFile.toString()}/dataset`;
+      const iamgeUrl = `https://dweb.link/ipfs/${resImage.toString()}/image`;
       const data = JSON.stringify({
         headline: headline,
         description: description,
         imageUrl: iamgeUrl,
       });
-      const resData = await ipfs.add(data);
-      const metadataUrl = `https://ipfs.io/ipfs/${resData.cid.toString()}`;
+      const datablob = new Blob([data], { type: "application/json" });
+      const dataFile = new File([datablob], "metadata.json");
+      const resData = await storage.put([dataFile]);
+      const metadataUrl = `https://dweb.link/ipfs/${resData.toString()}/metadata.json`;
       files = {
         datasetFile: datasetFileUrl,
         metadataUrl: metadataUrl,
       };
+      console.log(files);
       return files;
     } catch (error) {
       console.log("Error uploading file: ", error);

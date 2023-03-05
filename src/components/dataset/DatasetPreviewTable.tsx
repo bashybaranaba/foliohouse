@@ -40,7 +40,7 @@ export default function DatasetPreviewTable(props: Props) {
     console.log(datasetFile);
     const data = await decryptPreview(
       datasetFile,
-      "0ed60d684aea75f4f4c761c9d9beab51"
+      process.env.NEXT_PUBLIC_DATASET_SECRET
     );
 
     const columnObjects = Object.keys(data[0]).map((columnItem) => {
