@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 
@@ -43,14 +42,18 @@ export default function DatasetPreviewTable(props: Props) {
       process.env.NEXT_PUBLIC_DATASET_SECRET
     );
 
-    const columnObjects = Object.keys(data[0]).map((columnItem) => {
-      let item = { field: columnItem, headerName: columnItem };
-      return item;
-    });
-    const rowObjects = data.map((rowItem, index) => {
-      let item = { id: index, ...rowItem };
-      return item;
-    });
+    const columnObjects =
+      Object.keys(data[0]) &&
+      Object.keys(data[0]).map((columnItem) => {
+        let item = { field: columnItem, headerName: columnItem };
+        return item;
+      });
+    const rowObjects =
+      data &&
+      data.map((rowItem, index) => {
+        let item = { id: index, ...rowItem };
+        return item;
+      });
     setColumns(columnObjects);
     setRows(rowObjects);
     console.log(rowObjects);
