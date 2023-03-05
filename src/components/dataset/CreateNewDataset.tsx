@@ -27,6 +27,8 @@ import { encryptFile } from "@/src/util/encryptFile";
 import { FoliohouseAddress } from "../../../config.js";
 import Foliohouse from "../../../Foliohouse.json";
 
+const encryption_key = process.env.NEXT_PUBLIC_DATASET_SECRET;
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
@@ -88,10 +90,12 @@ export default function CreateNewDataset() {
       metadataUrl: "",
     };
 
-    const encryptedDataset = await encryptFile(
-      file,
-      process.env.NEXT_PUBLIC_DATASET_SECRET
-    );
+    if (!file || !image) {
+      console.log("File or image is missing");
+      return;
+    }
+
+    const encryptedDataset = await encryptFile(file, encryption_key);
     try {
       const encyptedDatasetFile = new File([encryptedDataset], "dataset");
       const resFile = await storage.put([encyptedDatasetFile]);
@@ -126,16 +130,17 @@ export default function CreateNewDataset() {
     const signer = provider.getSigner();
 
     const processedDatasetFiles = await processDatasetFiles();
-    const { datasetFile, metadataUrl } = processedDatasetFiles;
+    const datasetFile = processedDatasetFiles?.datasetFile;
+    const metadataUrl = processedDatasetFiles?.metadataUrl;
 
     let contract = new ethers.Contract(
       FoliohouseAddress,
       Foliohouse.abi,
       signer
     );
-    console.log(file.size, name, datasetFile, metadataUrl, isPrivate);
+    console.log(file?.size, name, datasetFile, metadataUrl, isPrivate);
     let creationAction = await contract.createDataset(
-      file.size,
+      file?.size,
       name,
       datasetFile,
       metadataUrl,

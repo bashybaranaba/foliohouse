@@ -5,7 +5,7 @@ const Web3 = require("web3");
 
 export default async function handler(req, res) {
   const { method } = req;
-  const web3 = new Web3("http://127.0.0.1:8545/");
+  const web3 = new Web3("https://api.hyperspace.node.glif.io/rpc/v1");
   const contract = new web3.eth.Contract(Foliohouse.abi, FoliohouseAddress);
 
   if (method === "GET") {
