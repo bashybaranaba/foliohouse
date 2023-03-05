@@ -142,6 +142,7 @@ export default function DatasetDetails() {
           <Typography variant="h6">No data</Typography>
         </Box>
       ) : null}
+      <Box sx={{ m: 4 }} />
     </Grid>
   );
 }

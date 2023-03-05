@@ -1,11 +1,13 @@
 import { FoliohouseAddress } from "../../../config.js";
 import Foliohouse from "../../../Foliohouse.json";
 
-const Web3 = require("web3");
+const Web3js = require("web3");
 
 export default async function handler(req, res) {
   const { method } = req;
-  const web3 = new Web3("https://api.hyperspace.node.glif.io/rpc/v1");
+  const web3 = new Web3js(
+    new Web3js.providers.HttpProvider("https://rpc.ankr.com/filecoin_testnet")
+  );
   const contract = new web3.eth.Contract(Foliohouse.abi, FoliohouseAddress);
 
   if (method === "GET") {

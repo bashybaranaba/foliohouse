@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
+import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
@@ -21,7 +22,7 @@ import Foliohouse from "../Foliohouse.json";
 
 export default function AccountDetails() {
   const [datasets, setDatasets] = useState<any>([]);
-
+  const [loading, setLoading] = useState(false);
   const [accountAddress, setAccountAddress] = useState("");
   const [tokensEarned, setTokensEarned] = useState(0);
   const [storageUsed, setStorageUsed] = useState(0);
@@ -30,6 +31,7 @@ export default function AccountDetails() {
   }, []);
 
   async function loadAccount() {
+    setLoading(true);
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -59,6 +61,7 @@ export default function AccountDetails() {
     );
     setDatasets(datasets);
     datasets.sort((a, b) => b.id - a.id);
+    setLoading(false);
   }
 
   return (
@@ -116,6 +119,7 @@ export default function AccountDetails() {
                   ></Avatar>
                 </Grid>
                 <Grid item sm={11} lg={11}>
+                  {loading ? <LinearProgress /> : null}
                   <Box
                     sx={{
                       m: 1,

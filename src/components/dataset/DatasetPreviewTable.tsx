@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
-
+import LinearProgress from "@mui/material/LinearProgress";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 interface Props {
@@ -25,6 +25,7 @@ export default function DatasetPreviewTable(props: Props) {
 
   return (
     <div style={{ height: 350, width: "100%" }}>
+      {!rows || !columns ? <LinearProgress /> : null}
       <DataGrid
         rows={rows}
         columns={columns}
