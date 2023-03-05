@@ -46,7 +46,7 @@ export default function DatasetForm(props: Props) {
             type="file"
             accept=".csv"
             hidden
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={(e) => setFile(e.target.files?.[0])}
           />
         </Button>
 

@@ -65,7 +65,7 @@ export default function DetailsForm(props: Props) {
           <input
             type="file"
             hidden
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={(e) => setImage(e.target.files?.[0])}
           />
         </Button>
         {image ? (
