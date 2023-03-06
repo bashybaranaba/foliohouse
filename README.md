@@ -14,7 +14,7 @@ The platfrom gives dataset creators the ability to control who can view, access,
 #### Dataset Loader
 The dataset loader downloads and prepares datasets for inspection and ML model evaluation and training in a standard format.
 
-#### Live Prototype
+### Live Prototype
 https://foliohouse-prototype.vercel.app/
 
 ## Key Technologied Used
