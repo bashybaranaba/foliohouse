@@ -17,9 +17,12 @@ A runtime environment for smart contracts  on the Filecoin network that brings u
 A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored, and retrieves data by CID.
 
 ## Key Features
-#### Built-in Token Economy
-#### Access control
-#### Dataset Loader
+### Built-in Token Economy
+Dataset creators earn tokens each time their datasets are used which can be used to cover storage costs on the platform
+### Access control
+The platfrom gives dataset creators the ability to control who can view, access and load and use their datasets
+### Dataset Loader
+The dataset loader downloads and prepares datasets for inspection and ML model evaluation and training in a standard format.
 
 ### URLs
 #### Live Protottype
