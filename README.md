@@ -17,8 +17,8 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 
 ### Key Technologies Used
 - Next js: A popular open-source framework for building server-rendered React applications that enable developers to build highly performant and scalable web applications by providing a set of powerful features and optimizations out-of-the-box.
--Filecoin VM: A runtime environment for smart contracts on the Filecoin network that brings user programmability to Filecoin
--Web3 Storage: A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored and retrieves data by CID.
+- Filecoin VM: A runtime environment for smart contracts on the Filecoin network that brings user programmability to Filecoin
+- Web3 Storage: A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored and retrieves data by CID.
 
 
 
