@@ -10,8 +10,13 @@ This project leverages the Filecoion VM and IPFS Web3 storage to create a decent
 
 ## Key Technologied Used
 #### Next js
+A popular open-source framework for building server-rendered React applications that enables developers to build highly performant and scalable web applications by providing a set of powerful features and optimizations out-of-the-box.
+
 #### Filecoin VM
+A runtime environment for smart contracts  on the Filecoin network that brings user programmability to Filecoin, unleashing the enormous potential of an open data economy.
+
 #### Web3 Storage
+A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored, and retrieves data by CID.
 
 ## Key Features
 #### Built-in Token Economy
