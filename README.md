@@ -9,13 +9,14 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 This project leverages the Filecoion VM and IPFS Web3 storage to create a decentralized dataset repository that provides access control and a built-in token economy to incentivize contributions and cover the cost of storage.
 
 ## Key Technologied Used
-####Next js
-####Filecoin VM
-####Web3 Storage
+#### Next js
+#### Filecoin VM
+#### Web3 Storage
 
-## Key Features Implemented
-####Built-in Token Economy
-####Dataset Loader
+## Key Features
+#### Built-in Token Economy
+#### Access control
+#### Dataset Loader
 
 ### URLs
 #### Live Protottype
@@ -24,13 +25,3 @@ https://foliohouse-prototype.vercel.app/
 ### Slides
 https://www.canva.com/design/DAFYPbP4Xlo/nStFvGUYWfISnyMW7MYQow/view?utm_content=DAFYPbP4Xlo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
