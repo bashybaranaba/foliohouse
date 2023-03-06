@@ -15,7 +15,7 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 - Dataset Loader: The dataset loader downloads and prepares datasets for inspection, evaluation and training in a standard format
 
 
-### Key Technologied Used
+### Key Technologies Used
 - Next js: 
 A popular open-source framework for building server-rendered React applications that enables developers to build highly performant and scalable web applications by providing a set of powerful features and optimizations out-of-the-box.
 - Filecoin VM: 
