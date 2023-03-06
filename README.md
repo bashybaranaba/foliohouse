@@ -8,12 +8,12 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 
 This project leverages the Filecoion VM and IPFS Web3 storage to create a decentralized dataset repository that provides access control and a built-in token economy to incentivize contributions and cover the cost of storage.
 
-###Key Technologied Used
+## Key Technologied Used
 ####Next js
 ####Filecoin VM
 ####Web3 Storage
 
-###Key Features Implemented
+## Key Features Implemented
 ####Built-in Token Economy
 ####Dataset Loader
 
