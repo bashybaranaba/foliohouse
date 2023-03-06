@@ -9,14 +9,6 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 #### Live Prototype
 https://foliohouse-prototype.vercel.app/
 
-## Key Technologied Used
-#### Next js
-A popular open-source framework for building server-rendered React applications that enables developers to build highly performant and scalable web applications by providing a set of powerful features and optimizations out-of-the-box.
-#### Filecoin VM
-A runtime environment for smart contracts  on the Filecoin network that brings user programmability to Filecoin, unleashing the enormous potential of an open data economy.
-#### Web3 Storage
-A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored, and retrieves data by CID.
-
 ## Key Features
 ### Built-in Token Economy
 Dataset creators earn tokens each time their datasets are used which can be used to cover storage costs on the platform
@@ -24,6 +16,14 @@ Dataset creators earn tokens each time their datasets are used which can be used
 The platfrom gives dataset creators the ability to control who can view, access, load and use their datasets
 ### Dataset Loader
 The dataset loader downloads and prepares datasets for inspection and ML model evaluation and training in a standard format.
+
+## Key Technologied Used
+#### Next js
+A popular open-source framework for building server-rendered React applications that enables developers to build highly performant and scalable web applications by providing a set of powerful features and optimizations out-of-the-box.
+#### Filecoin VM
+A runtime environment for smart contracts  on the Filecoin network that brings user programmability to Filecoin, unleashing the enormous potential of an open data economy.
+#### Web3 Storage
+A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored, and retrieves data by CID.
 
 
 ## Next Steps
