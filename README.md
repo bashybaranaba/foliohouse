@@ -21,7 +21,7 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 - Web3 Storage: A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored and retrieves data by CID.
 
 ### Licence
-MIT
+- MIT
 
 ### Future Works
 
