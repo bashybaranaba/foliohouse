@@ -24,6 +24,6 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 - MIT
 
 ### Future Works
-
+The overarching goal of the Foliohouse project is to advance and democratize machine learning and data science leveraging blockchain to promote open science. The aim is to go beyond datasets and create open protocols that govern the ownership sharing of scientific papers, data and usage of machine learning models.
 
 
