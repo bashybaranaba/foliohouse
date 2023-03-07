@@ -20,10 +20,10 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 - Filecoin VM: A runtime environment for smart contracts on the Filecoin network that brings user programmability to Filecoin
 - Web3 Storage: A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored and retrieves data by CID.
 
-### Licence
+### License
 - MIT
 
 ### Future Works
-The overarching goal of the Foliohouse project is to advance and democratize machine learning and data science leveraging blockchain to promote open science. The aim is to go beyond datasets and create open protocols that govern the ownership sharing of scientific papers, data and usage of machine learning models.
+The overarching goal of the Foliohouse project is to advance and democratize machine learning and data science by leveraging blockchain to promote open science. The aim is to go beyond datasets and create tools and open protocols that govern the sharing of scientific papers, data, and the usage and ownership of machine learning models.
 
 
