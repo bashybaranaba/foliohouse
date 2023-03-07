@@ -12,7 +12,7 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 ### Key Features
 - Built-in Token Economy: Dataset creators earn tokens each time their datasets are used which can be used to cover storage costs
 - Access control: The platform gives dataset creators the ability to control who can view, access, load, and use their datasets
-- Dataset Loader: A lightweight python library for interacting with datasets available on the Foliohouse. It downloads and prepares datasets for inspection, evaluation, and training in a standard format. ~ more info at: https://github.com/bashybaranaba/foliohouse-datasetloader
+- Dataset Loader: A lightweight python library for interacting with datasets available on Foliohouse. It downloads and prepares datasets for inspection, evaluation, and training in a standard format. ~ more info at: https://github.com/bashybaranaba/foliohouse-datasetloader
 
 
 ### Key Technologies Used
