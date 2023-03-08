@@ -41,7 +41,7 @@ from foliohouse import load_dataset
 dataset = load_dataset("https://dweb.link/ipfs/bafybeife7x5l2mzfsbkhfraltoj2obun6wh5n74mxm7hr22mah3pkxdhb4/dataset")
 ```
 
-### Future Works
+## Future Works
 The overarching goal of the Foliohouse project is to advance and democratize machine learning and data science by leveraging blockchain to promote open science. The aim is to go beyond datasets and create tools and open protocols that govern the sharing of scientific papers, data, and the usage and ownership of machine learning models.
 
 ### License
