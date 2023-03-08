@@ -1,5 +1,4 @@
 # Foliohouse
-![foliohouse-home](https://user-images.githubusercontent.com/33184082/223666516-7f2a377b-27c2-48fc-9582-739519f0f8ec.png)
 
 ### Project Description
 Foliohouse is a decentralized dataset repository that provides access control and a built-in token economy to incentivize the contribution of quality datasets and cover the cost of storage
