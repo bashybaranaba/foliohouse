@@ -29,7 +29,7 @@ pip install foliohouse
 ```
 #### Functions
 
-The Foliohouse library is simple to use. The main methods are:
+The main methods are:
 
 `foliohouse.load_dataset(dataset_url)` : for instantiating a dataset
 
