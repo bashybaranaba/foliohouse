@@ -21,7 +21,7 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 - **Web3 Storage**: A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored and retrieves data by CID.
 
 ## Usage
-- One can create, upload and previw datasets on the web interface at https://foliohouse-prototype.vercel.app/ 
+- One can create, upload and preview datasets on the web interface at https://foliohouse-prototype.vercel.app/ 
 - To access and use datasets on Foliohouse, use the dataset loader to load and interact with datasets in your ML/data science projects
 
 ### Accessing Foliohouse datasets using the dataset loader
