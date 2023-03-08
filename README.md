@@ -22,18 +22,18 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 
 
 ### Using the foliohouse dataset loader
-##### Installation
+#### Installation
 
 ```shell
 pip install foliohouse
 ```
-##### Functions
+#### Functions
 
 The Foliohouse library is simple to use. The main methods are:
 
 `foliohouse.load_dataset(dataset_url)` : for instantiating a dataset
 
-##### Quick example
+#### Quick example
 
 ```python
 from foliohouse import load_dataset
