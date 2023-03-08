@@ -21,6 +21,27 @@ Datasets provide the foundation for data analysis, machine learning, and artific
 - **Web3 Storage**: A service that stores data redundantly across multiple Filecoin miners and the public IPFS network, provides information about where the data is stored and retrieves data by CID.
 
 
+## Run it on your machine
+
+```shell
+npm install
+```
+
+```shell
+npx hardhat test
+```
+
+```shell
+npx hardhat node
+```
+
+```shell
+npx hardhat run scripts/deploy.js --network localhost
+```
+```shell
+npm run dev
+```
+
 ### Using the foliohouse dataset loader
 #### Installation
 
